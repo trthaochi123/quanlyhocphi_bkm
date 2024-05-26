@@ -111,4 +111,7 @@ class AcademicYearController extends Controller
         return Redirect::route('academics.index');
     }
 
+    public function newFunction(){
+
+    }
 }
