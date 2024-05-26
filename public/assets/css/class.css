@@ -1,0 +1,58 @@
+
+
+.heading{
+    text-align: center;
+    color:#fff;
+    margin-top:20px;
+}
+.navigate{
+    /*margin-left:50px;*/
+}
+.content .breadcrumb a{
+    text-decoration: none;
+}
+
+.card {
+    width: 180px;
+    height: 180px;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    margin: 10px 15px;
+    background-color: rgb(95, 158, 198);
+    background-position: center;
+    background-size: cover;
+    transition: transform 0.5s;
+
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    background: rgb(202, 243, 68);
+}
+.card:hover a,
+.card:hover h5{
+    color:#000;
+}
+h5 {
+    color: #fff;
+}
+
+.card p {
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.card p:hover{
+    opacity: 0.6;
+}
+.card p a{
+    text-decoration: none;
+    color:#fff;
+}
+h4.admin{
+    display: inline;
+    font-weight: 400;
+}
+

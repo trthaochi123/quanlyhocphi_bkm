@@ -1,0 +1,21 @@
+.sidebar ul li .fas {
+    font-size: 14px;
+}
+
+
+.sidebar ul li .debt-text {
+    margin-right: 10px;
+    flex: 1;
+}
+
+
+.sidebar .sub-menu {
+    display: none;
+    color: #fff;
+    margin-left: 20px;
+    padding-left: 20px;
+    padding-top: 5px;
+    background-color: black;
+    text-decoration: none;
+
+}

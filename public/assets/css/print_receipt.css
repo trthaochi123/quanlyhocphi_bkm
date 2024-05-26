@@ -1,0 +1,23 @@
+.invoice-btns {
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.invoice-btn {
+    padding: 3px 9px;
+    cursor: pointer;
+}
+
+
+
+@media print{
+    #print-area{
+        visibility: visible;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+
+    }
+}

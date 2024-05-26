@@ -1,0 +1,49 @@
+
+
+
+.content2{
+    width:80%;
+    height:100%;
+    float:right;
+    margin-top: 50px;
+}
+.add-form .inputs-list{
+    background: #f1f1f1;
+    display: inline-block;
+    width:100%;
+    padding: 0px 40px;
+}
+.inputs-list input{
+    padding:2px 3px;
+    margin: 3px 0px;
+}
+.inputs-list #admin_name,
+.inputs-list #admin_phone,
+.inputs-list #email,
+.inputs-list #password,
+.inputs-list #academic_start_year,
+.inputs-list #academic_end_year,
+.inputs-list #academic_name,
+.inputs-list #class_name,
+.inputs-list #major_id,
+.inputs-list #academic_id,
+.inputs-list #major_name,
+.inputs-list #payMethodName,
+.inputs-list #basic_fee_amount,
+.inputs-list #scholarship_amount
+{
+    width:60%;
+}
+
+.form-receipt .row{
+    margin: 30px 5px;
+}
+.form-receipt .row label,
+.form-receipt .row input
+{
+    display: block;
+}
+
+
+
+
