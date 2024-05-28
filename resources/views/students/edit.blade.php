@@ -183,29 +183,35 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 ">
-
+                                        <div class="mt-3 mb-3">
+                                            <label for="basic_fee">Basic fees</label>
+                                            @foreach($students as $student)
+                                                @foreach($classes as $class_study)
+                                                    @if($class_study->id == $student->class_id)
+                                                        @foreach ($basic_fees as $basic_fee)
+                                                            @if($basic_fee->academic_id == $class_study->academic_id && $basic_fee->major_id == $class_study->major_id)
+                                                                <div id="basic_fee"  data-basic-fee=" {{$basic_fee->basic_fee_amount}}">
+                                                                    {{$basic_fee->basic_fee_amount}}
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </div>
                                         <div class="mt-3 mb-3">
                                             <label for="scholarship_id">Scholarship</label>
                                             <select name="scholarship_id" id="scholarship_id"
                                                 class="form-control form-control-sm">
                                                 @foreach ($scholarships as $scholarship)
                                                     <option value="{{ $scholarship->id }}"
-                                                        @if ($student->scholarship_id == $scholarship->id) {{ 'selected' }} @endif>
+                                                        @if ($student->scholarship_id == $scholarship->id) {{ 'selected' }} @endif
+                                                        data-amount="{{ $scholarship->scholarship_amount }}"
+                                                    >
                                                         {{ $scholarship->scholarship_amount }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                        </div>
-                                        <div class="mt-3 mb-3">
-                                            <label for="total_fee">Total fee</label>
-                                            <input value={{ $student->total_fee }} name="total_fee" type="text"
-                                                id="total_fee" class="form-control form-control-sm" />
-                                        </div>
-                                        <div class="mt-3 mb-3">
-                                            <label for="amount_each_time">Amount each time</label>
-                                            <input value={{ $student->amount_each_time }} name="amount_each_time"
-                                                type="text" id="amount_each_time"
-                                                class="form-control form-control-sm" />
                                         </div>
                                         <div class="mt-3 mb-3">
                                             <label for="payment_type_id">Payment type</label>
@@ -213,11 +219,24 @@
                                                 class="form-control form-control-sm">
                                                 @foreach ($payment_types as $payment_type)
                                                     <option value="{{ $payment_type->id }}"
+                                                            data-discount="{{ $payment_type->discount }}"
+                                                            data-payment-times="{{ $payment_type->payment_times }}"
                                                         @if ($student->payment_type_id == $payment_type->id) {{ 'selected' }} @endif>
-                                                        {{ $payment_type->payment_type_name }}
+                                                        {{ $payment_type->payment_type_name }} - Discount {{ $payment_type->discount }}
                                                     </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="mt-3 mb-3">
+                                            <label for="total_fee">Total fee</label>
+                                            <input value={{ $student->total_fee }} name="total_fee" type="text"
+                                                   id="total_fee" class="form-control form-control-sm" />
+                                        </div>
+                                        <div class="mt-3 mb-3">
+                                            <label for="amount_each_time">Amount each time</label>
+                                            <input value={{ $student->amount_each_time }} name="amount_each_time"
+                                                   type="text" id="amount_each_time"
+                                                   class="form-control form-control-sm" />
                                         </div>
                                         <div class="mt-3 mb-3">
                                             <label for="tuition_status">Tuition status</label>
@@ -261,6 +280,50 @@
 
         subMenu.addEventListener('click', (event) => event.stopPropagation());
     </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var basicFeeElement = document.getElementById('basic_fee');
+            var scholarshipDropdown = document.getElementById('scholarship_id');
+            var totalFeeInput = document.getElementById('total_fee');
+            var discountDropdown = document.getElementById('payment_type_id');
+            var paymentTimesDropdown = document.getElementById('amount_each_time');
+            var debt = document.getElementById('debt');
+
+            // Get basic fee amount from data attribute
+            var basicFeeAmount = parseFloat(basicFeeElement.getAttribute('data-basic-fee'));
+
+            function calculateTotalFee() {
+                var selectedScholarshipOption = scholarshipDropdown.options[scholarshipDropdown.selectedIndex];
+                var scholarshipAmount = parseFloat(selectedScholarshipOption.getAttribute('data-amount')) || 0;
+
+                var selectedDiscountOption = discountDropdown.options[discountDropdown.selectedIndex];
+                var discountAmount = parseFloat(selectedDiscountOption.getAttribute('data-discount')) || 0;
+
+                var paymentTimes = parseFloat(selectedDiscountOption.getAttribute('data-payment-times')) || 0;
+
+
+                // Calculate total fee
+                var totalFee = (basicFeeAmount - scholarshipAmount) * (1 - discountAmount);
+                var amountEachTime = (totalFee / paymentTimes);
+
+                // Update giao dien input field
+                totalFeeInput.value = totalFee.toFixed(2);
+                paymentTimesDropdown.value = amountEachTime.toFixed(2);
+                debt.value = amountEachTime.toFixed(2);
+            }
+
+
+            // Add event listeners to dropdowns
+            scholarshipDropdown.addEventListener('change', calculateTotalFee);
+            discountDropdown.addEventListener('change', calculateTotalFee);
+
+            // Initial calculation
+            calculateTotalFee();
+        });
+    </script>
+
 </body>
 
 </html>

@@ -109,6 +109,8 @@ class StudentController extends Controller
         $scholarships = $obj2->index();
         $obj3 = new PaymentType();
         $payment_types = $obj3->index();
+        $obj4 = new BasicFee();
+        $basic_fees = $obj4->index();
 
         $obj4 = new Student();
         $obj4->id = $request->id;
@@ -117,6 +119,7 @@ class StudentController extends Controller
             'classes'=>$classes,
             'scholarships'=>$scholarships,
             'payment_types'=>$payment_types,
+            'basic_fees'=>$basic_fees,
             'students'=>$students,
             'id'=>$obj4->id
         ]);

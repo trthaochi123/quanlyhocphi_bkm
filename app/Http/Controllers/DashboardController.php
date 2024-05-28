@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dashboard;
 use App\Http\Requests\StoreDashboardRequest;
 use App\Http\Requests\UpdateDashboardRequest;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -15,7 +16,30 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboards.index');
+        $student = DB::table('students')->count();
+        $admin = DB::table('admins')->count();
+        $accountant = DB::table('accountants')->count();
+        $total_revenue = DB::table('receipts')->sum('amount_of_money');
+        $total_debt = DB::table('students')->sum('debt');
+        $total_debt_quarter = DB::table('students')
+            ->where('payment_type_id', '=', '13')
+            ->sum('debt');
+        $total_debt_semester = DB::table('students')
+            ->where('payment_type_id', '=', '14')
+            ->sum('debt');
+        $total_debt_year = DB::table('students')
+            ->where('payment_type_id', '=', '15')
+            ->sum('debt');
+        return view('dashboards.index', compact(
+            'student',
+            'admin',
+            'accountant',
+            'total_revenue',
+            'total_debt',
+            'total_debt_quarter',
+            'total_debt_semester',
+            'total_debt_year'
+        ));
     }
 
     /**
