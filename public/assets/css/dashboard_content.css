@@ -1,0 +1,28 @@
+.dashboard_content {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.card {
+    width: 300px;
+}
+
+.chart-overview {
+    margin: 0 auto;
+}
+
+
+.bar-chart{
+    margin-left: 34px;
+}
+
+.bar-chart h1 {
+    padding-top: 25px;
+    font-size: 20px;
+}
+
+.chart-content {
+    width: 690px;
+    height: 400px;
+    border-radius: 15px;
+}
