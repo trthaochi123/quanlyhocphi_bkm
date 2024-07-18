@@ -41,14 +41,9 @@
                         </div>
                         <hr>
 
-                        <a href="#" class="sub-menu-link">
-                            <img src="{{ URL('image/help.png') }}" alt="" class="user-info">
-                            <p>Help</p>
-                            <span>></span>
-                        </a>
                         <a href="{{ route('admins.logout') }}" class="sub-menu-link">
                             <img src="{{ URL('image/logout.png') }}" alt="" class="user-info">
-                            <p>Log Out</p>
+                            <p>Đăng xuất</p>
                             <span>></span>
                         </a>
                     </div>
@@ -89,10 +84,10 @@
                                     <th>SĐT người nộp</th>
                                     <th>Đã nộp</th>
                                     <th>Công nợ</th>
-                                    <th>Payment method</th>
+                                    <th>Phương thức thanh toán</th>
                                     <th>Thời gian</th>
                                     <th>Kế Toán</th>
-                                    <th>Ghi chú</th>
+                                    <th>Nội dung</th>
                                     <th>Tạo phiếu</th>
                                 </tr>
                             </thead>

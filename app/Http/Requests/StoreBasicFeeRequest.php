@@ -24,7 +24,17 @@ class StoreBasicFeeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'major_id' => 'required|integer',
+            'academic_id' => 'required|integer',
+            'basic_fee_amount' => ['required', 'regex:/^[1-9]+[0-9.]*$/', 'min:1'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'basic_fee_amount.required' => 'Mức học phí không thể để trống',
+            'basic_fee_amount.regex' => 'Mức học phí phải là số và lớn hơn 0',
         ];
     }
 }

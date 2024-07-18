@@ -21,7 +21,7 @@ class Store implements Session
      *
      * @var string
      */
-    protected $id;
+    public $id;
 
     /**
      * The session name.

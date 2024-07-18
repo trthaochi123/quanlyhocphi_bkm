@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\SendSMSController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SmsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,7 +131,25 @@ Route::middleware('checkLoginAccountant')->prefix('/receipts')->group(function()
     Route::get('{id}/students',[\App\Http\Controllers\ReceiptController::class,'studentFilter'])->name('receipts.studentFilter');
     Route::get('/academics',[\App\Http\Controllers\ReceiptController::class,'classesList'])->name('receipts.academics');
     Route::get('{id}/classes',[\App\Http\Controllers\ReceiptController::class,'classFilter'])->name('receipts.classFilter');
+    Route::get('/dashboard', [\App\Http\Controllers\ReceiptController::class, 'dashboard'])->name('receipts.dashboard');
+    Route::get('/blogs/{id}', [\App\Http\Controllers\ReceiptController::class, 'showBlog'])->name('receipts.showblog');
 
 });
     Route::get('/dashboards',[\App\Http\Controllers\DashboardController::class,'index'])->name('dashboards.index');
 
+
+    Route::get('/send-sms/{id}', [SendSMSController::class, 'loadPage']);
+
+    Route::post('/send-sms/{id}', [SendSMSController::class, 'sendSMS'])->name('sendSMS');
+
+    Route::prefix('/blogs')->group(function(){
+        Route::get('/', [\App\Http\Controllers\BlogController::class, 'index'])->name('blogs.index');
+        Route::get('/create', [\App\Http\Controllers\BlogController::class, 'create'])->name('blogs.create');
+        Route::post('/create', [\App\Http\Controllers\BlogController::class, 'store'])->name('blogs.store');
+        Route::get('/{blog}/edit', [\App\Http\Controllers\BlogController::class, 'edit'])->name('blogs.edit');
+        Route::put('/{blog}/edit', [\App\Http\Controllers\BlogController::class, 'update'])->name('blogs.update');
+        Route::delete('/{blog}', [\App\Http\Controllers\BlogController::class, 'destroy'])->name('blogs.destroy');
+    });
+
+    //show blog
+    Route::get('/blogs/{id}', [\App\Http\Controllers\BlogController::class, 'showBlog'])->name('blogs.show');

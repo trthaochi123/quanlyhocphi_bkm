@@ -24,7 +24,14 @@ class StoreStudyClassRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'class_name' => ['required'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'class_name.required' => 'Bạn chưa nhập tên Lớp'
         ];
     }
 }

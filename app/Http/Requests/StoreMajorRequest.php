@@ -24,7 +24,14 @@ class StoreMajorRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Tên Chuyên ngành không thể để trống'
         ];
     }
 }

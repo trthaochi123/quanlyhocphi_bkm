@@ -1,5 +1,5 @@
 .invoice-btns {
-    margin-top: 70px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
 }
@@ -7,6 +7,33 @@
 .invoice-btn {
     padding: 3px 9px;
     cursor: pointer;
+    width: 70px;
+    align-items: center;
+    background-clip: padding-box;
+    background-color: #1358c1;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: 100px;
+
 }
 
 

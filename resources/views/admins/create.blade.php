@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admins.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
-    <title>Admin-add</title>
+    <title>Danh sách Quản Trị Viên</title>
 </head>
 
 <body>
@@ -40,14 +40,9 @@
                         </div>
                         <hr>
 
-                        <a href="#" class="sub-menu-link">
-                            <img src="{{ URL('image/help.png') }}" alt="" class="user-info">
-                            <p>Help</p>
-                            <span>></span>
-                        </a>
                         <a href="{{ route('admins.logout') }}" class="sub-menu-link">
                             <img src="{{ URL('image/logout.png') }}" alt="" class="user-info">
-                            <p>Log Out</p>
+                            <p>Đăng xuất</p>
                             <span>></span>
                         </a>
                     </div>
@@ -59,83 +54,88 @@
                 <ul class="category">
                     <li>
                         <a href="{{ route('dashboards.index') }}">
-                            <span><i class="fas fa-tachometer-alt"></i>Dashboard</span>
+                            <span><i class="fas fa-tachometer-alt"></i>Thống Kê</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admins.index') }}">
-                            <span><i class="fa fa-user"></i>Administrators</span>
+                            <span><i class="fa fa-user"></i>Quản Trị Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('students.academics') }}">
-                            <span><i class="fas fa-user-graduate"></i>Students Management</span>
+                            <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('academics.index') }}">
-                            <span><i class="fas fa-calendar"></i>Academic Years</span>
+                            <span><i class="fas fa-calendar"></i>Niên Khoá</span>
                         </a>
                     </li>
                     <li>
                         <a href=" {{ route('study_classes.index') }}">
-                            <span><i class="fas fa-home"></i>Classes Management</span>
+                            <span><i class="fas fa-home"></i>Lớp Học</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('majors.index') }}">
-                            <span><i class="fas fa-network-wired"></i>Majors Management</span>
+                            <span><i class="fas fa-network-wired"></i>Chuyên Ngành</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('accountants.index') }}">
-                            <span><i class="fas fa-file-plus"></i>Accountants Management</span>
+                            <span><i class="fas fa-file-plus"></i>Kế Toán Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('payment_methods.index') }}">
-                            <span><i class="fas fa-cash-register"></i>Payment Methods</span>
+                            <span><i class="fas fa-cash-register"></i>Phương Thức Thanh Toán</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('basic_fees.index') }}">
-                            <span><i class="fas fa-money-bill"></i>Basic Fees</span>
+                            <span><i class="fas fa-money-bill"></i>Học Phí Cơ Bản</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('scholarships.index') }}">
-                            <span><i class="fas fa-gift"></i>Scholarships Level</span>
+                            <span><i class="fas fa-gift"></i>Mức Học Bổng</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('payment_types.index') }}">
-                            <span><i class="fas fa-meteor"></i>Payment Types</span>
+                            <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="content2">
-                <h3 class="table-name2">Create A New Administrator</h3>
+                <h3 class="table-name2">Thêm Quản Trị Viên Mới</h3>
                 <div class="add-form">
                     <form method="post">
-                        <div class="form-heading">Enter Information Fields</div>
+                        <div class="form-heading">Điền Các Trường Thông Tin</div>
                         @csrf
                         <div class="inputs-list">
                             <div class="mt-3 mb-3">
-                                <label for="admin_name">Full name</label>
+                                <label for="admin_name">Họ tên</label>
                                 <input name="admin_name" type="text" id="admin_name"
                                     class="form-control form-control-sm" />
                                 @if ($errors->has('admin_name'))
-                                    {{ $errors->first('admin_name') }}
+                                <span class="text-danger">{{ $errors->first('admin_name') }}</span>
                                 @endif
                                 <br>
                             </div>
                             <div class="mt-3 mb-3">
-                                <label for="admin_phone">Phone number</label>
+                                <label for="admin_phone">Số điện thoại</label>
                                 <input name="admin_phone" type="text" id="admin_phone"
                                     class="form-control form-control-sm" />
                                 @if ($errors->has('admin_phone'))
-                                    {{ $errors->first('admin_phone') }}
+                                <span class="text-danger">{{ $errors->first('admin_phone') }}</span>
                                 @endif
                                 <br>
                             </div>
@@ -143,31 +143,31 @@
                             <div class="mt-3 mb-3">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-                                        <span>Address</span>
+                                        <span>Địa chỉ thường trú:</span>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-                                        <label for="province">Province</label>
+                                        <label for="province">Thành phố</label>
                                         <input name="province" type="text" id="province"
                                             class="form-control form-control-sm" />
                                         @if ($errors->has('province'))
-                                            {{ $errors->first('province') }}
+                                            <span class="text-danger">{{ $errors->first('province') }}</span>
                                         @endif
                                         <br>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-                                        <label for="district">District</label>
+                                        <label for="district">Quận</label>
                                         <input name="district" type="text" id="district"
                                             class="form-control form-control-sm" />
                                         @if ($errors->has('district'))
-                                            {{ $errors->first('district') }}
+                                        <span class="text-danger">{{ $errors->first('district') }}</span>
                                         @endif
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-                                        <label for="street">Street</label>
+                                        <label for="street">Đường</label>
                                         <input name="street" type="text" id="street"
                                             class="form-control form-control-sm" />
                                         @if ($errors->has('street'))
-                                            {{ $errors->first('street') }}
+                                        <span class="text-danger">{{ $errors->first('street') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -178,19 +178,19 @@
                                 <input name="email" type="text" id="email"
                                     class="form-control form-control-sm" />
                                 @if ($errors->has('email'))
-                                    {{ $errors->first('email') }}
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
                             <div class="mt-3 mb-3">
-                                <label for="password">Password</label>
+                                <label for="password">Mật khẩu</label>
                                 <input name="password" type="password" id="password"
                                     class="form-control form-control-sm" />
                                 @if ($errors->has('password'))
-                                    {{ $errors->first('password') }}
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
                             <div>
-                                <button class="btn btn-success btn-sm">Save</button>
+                                <button class="btn btn-primary" style="float:right; margin-bottom: 20px">Lưu</button>
                             </div>
                         </div>
                     </form>

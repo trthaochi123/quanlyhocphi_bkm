@@ -43,14 +43,9 @@
                         </div>
                         <hr>
 
-                        <a href="#" class="sub-menu-link">
-                            <img src="{{ URL('image/help.png') }}" alt="" class="user-info">
-                            <p>Help</p>
-                            <span>></span>
-                        </a>
                         <a href="{{ route('admins.logout') }}" class="sub-menu-link">
                             <img src="{{ URL('image/logout.png') }}" alt="" class="user-info">
-                            <p>Log Out</p>
+                            <p>Đăng xuất</p>
                             <span>></span>
                         </a>
                     </div>
@@ -62,57 +57,62 @@
                 <ul class="category">
                     <li>
                         <a href="{{ route('dashboards.index') }}">
-                            <span><i class="fas fa-tachometer-alt"></i>Dashboard</span>
+                            <span><i class="fas fa-tachometer-alt"></i>Thống Kê</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admins.index') }}">
-                            <span><i class="fa fa-user"></i>Administrators</span>
+                            <span><i class="fa fa-user"></i>Quản Trị Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('students.academics') }}">
-                            <span><i class="fas fa-user-graduate"></i>Students Management</span>
+                            <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('academics.index') }}">
-                            <span><i class="fas fa-calendar"></i>Academic Years</span>
+                            <span><i class="fas fa-calendar"></i>Niên Khoá</span>
                         </a>
                     </li>
                     <li>
                         <a href=" {{ route('study_classes.index') }}">
-                            <span><i class="fas fa-home"></i>Classes Management</span>
+                            <span><i class="fas fa-home"></i>Lớp Học</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('majors.index') }}">
-                            <span><i class="fas fa-network-wired"></i>Majors Management</span>
+                            <span><i class="fas fa-network-wired"></i>Chuyên Ngành</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('accountants.index') }}">
-                            <span><i class="fas fa-file-plus"></i>Accountants Management</span>
+                            <span><i class="fas fa-file-plus"></i>Kế Toán Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('payment_methods.index') }}">
-                            <span><i class="fas fa-cash-register"></i>Payment Methods</span>
+                            <span><i class="fas fa-cash-register"></i>Phương Thức Thanh Toán</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('basic_fees.index') }}">
-                            <span><i class="fas fa-money-bill"></i>Basic Fees</span>
+                            <span><i class="fas fa-money-bill"></i>Học Phí Cơ Bản</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('scholarships.index') }}">
-                            <span><i class="fas fa-gift"></i>Scholarships Level</span>
+                            <span><i class="fas fa-gift"></i>Mức Học Bổng</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('payment_types.index') }}">
-                            <span><i class="fas fa-meteor"></i>Payment Types</span>
+                            <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
                         </a>
                     </li>
                 </ul>

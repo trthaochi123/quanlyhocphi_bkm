@@ -6,7 +6,7 @@
     margin-top:20px;
 }
 .navigate{
-    /*margin-left:50px;*/
+    margin-left:50px;
 }
 .content .breadcrumb a{
     text-decoration: none;
@@ -53,6 +53,13 @@ h5 {
 }
 h4.admin{
     display: inline;
-    font-weight: 400;
 }
 
+.completed{
+    font-weight: 700;
+    color: #2be52b;
+}
+.no-completed{
+    color: red;
+    font-weight: 700;
+}

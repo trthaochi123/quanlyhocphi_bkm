@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\StoreStartRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -55,6 +56,7 @@ class AdminController extends Controller
             $obj->email = $request->email;
             $obj->password = bcrypt($request->get('password'));
             $obj->store();
+            session()->flash('success', 'Đã tạo thành công!');
             return Redirect::route('admins.index');
         } else {
             return Redirect::back();
@@ -98,17 +100,20 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
-        $obj = new Admin();
-        $obj->id = $request->id;
-        $obj->admin_phone = $request->admin_phone;
-        $obj->admin_name = $request->admin_name;
-        $obj->province = $request->province;
-        $obj->district = $request->district;
-        $obj->street = $request->street;
-        $obj->email = $request->email;
-        $obj->password = bcrypt($request->get('password'));
-        $obj->updateAdmin();
-        return Redirect::route('admins.index');
+        if ($request->validated()) {
+            $obj = new Admin();
+            $obj->id = $request->id;
+            $obj->admin_phone = $request->admin_phone;
+            $obj->admin_name = $request->admin_name;
+            $obj->province = $request->province;
+            $obj->district = $request->district;
+            $obj->street = $request->street;
+            $obj->email = $request->email;
+            $obj->password = bcrypt($request->get('password'));
+            $obj->updateAdmin();
+            session()->flash('success', 'Cập nhât thành công!');
+            return Redirect::route('admins.index');
+        } else Redirect::back();
     }
 
     /**
@@ -122,23 +127,42 @@ class AdminController extends Controller
         $obj = new Admin();
         $obj->id = $request->id;
         $obj->destroyAdmin();
+        session()->flash('success', 'Đã xoá thành công!');
         return Redirect::route('admins.index');
     }
-    public function loginAdmin(Request $request)
+
+    // public function loginAdmin(Request $request)
+    // {
+
+    //     $account = $request->only(['email', 'password']);
+
+    //     if (Auth::guard('admins')->attempt($account)) {
+    //         $admin = Auth::guard('admins')->user();
+    //         Auth::guard('admins')->login($admin);
+    //         session(['admin' => $admin]);
+    //         return Redirect::route('dashboards.index');
+    //     } else {
+    //         return Redirect::back()->with('error', 'Thông tin đăng nhập không đúng!');
+    //     }
+    // }
+
+    public function loginAdmin(StoreStartRequest $request)
     {
-        //        $account = array();
-        //        $account = Arr::add($account, 'email' , $request->admin_username);
-        //        $account = Arr::add($account, 'password' , $request->admin_password);
-        $account = $request->only(['email', 'password']);
-        //        dd($account);
-        if (Auth::guard('admins')->attempt($account)) {
-            $admin = Auth::guard('admins')->user();
-            Auth::guard('admins')->login($admin);
-            session(['admin' => $admin]);
-            return Redirect::route('academics.index');
+        $validated = $request->validated();
+
+        if ($validated) {
+            $account = $request->only('email', 'password');
+
+            if (Auth::guard('admins')->attempt($account)) {
+                $admin = Auth::guard('admins')->user();
+                Auth::guard('admins')->login($admin);
+                session(['admin' => $admin]);
+                return redirect()->route('dashboards.index');
+            } else {
+                return back()->withErrors('Thông tin đăng nhập không chính xác.');
+            }
         } else {
-            //            dd("error");
-            return Redirect::back();
+            return back()->withErrors($request->errors())->withInput();
         }
     }
 

@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.svg" type="image/x-icon') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard</title>
+    <title>Thống Kê</title>
 </head>
 
 <body>
@@ -53,12 +53,6 @@
                             </h2>
                         </div>
                         <hr>
-
-                        <a href="#" class="sub-menu-link">
-                            <img src="{{ URL('image/help.png') }}" alt="" class="user-info">
-                            <p>Trợ giúp</p>
-                            <span>></span>
-                        </a>
                         <a href="{{ route('admins.logout') }}" class="sub-menu-link">
                             <img src="{{ URL('image/logout.png') }}" alt="" class="user-info">
                             <p>Đăng xuất</p>
@@ -126,6 +120,11 @@
                             <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="content">
@@ -188,8 +187,9 @@
 
                             </div>
 
-                            <div class="box" style="width: 200px">
-                                <div class="chart-overview">
+
+                            <div class="box" style="display: flex; width: 1000px;">
+                                <div class="chart-overview" style="flex: 1;">
                                     <div class="chart-content bg-white">
                                         <div class="bar-chart">
                                             <h1>Biểu Đồ Tổng</h1>
@@ -231,6 +231,34 @@
 
                                     </div>
                                 </div>
+
+                                {{-- Tin tức --}}
+                                <div class="news-column" style="flex: 1; margin-left: 42px;">
+                                    <div class="line-news"
+                                        style="height: 3px; width: 400px; background-color: #147dbc;"></div>
+                                    <h1 style="font-size: 26px; margin-top: 15px;margin-bottom: 13px">Tin Tức</h1>
+
+                                    @foreach ($blogs as $blog)
+                                        <a href="{{ route('blogs.show', ['id' => $blog->id]) }}">
+                                            <div class="card mb-3" style="width: 400px">
+                                                <img src="{{ asset('storage/Admin/' . $blog->image) }}"
+                                                    alt="Ảnh tin tức" class="card-img-top" style="height: 195px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ $blog->title_blog }}</h5>
+                                                    <p class="card-text">{{ $blog->description_blog }}</p>
+                                                    <p class="card-text"><small
+                                                            class="text-body-secondary">{{ $blog->posting_date_time }}</small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @endforeach
+
+                                    {{-- Hiển thị phân trang --}}
+                                    <div class="pagination">
+                                        {{ $blogs->links() }}
+                                    </div>
+                                </div>
                             </div>
 
                             <br>
@@ -241,10 +269,16 @@
 
                     </section>
                 </div>
+
+
+
             </div>
         </div>
     </div>
     </div>
+
+
+
     <script>
         var today = new Date();
         var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
@@ -255,6 +289,7 @@
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 
+    {{-- User avatar --}}
     <script>
         let subMenu = document.getElementById("subMenu");
 
@@ -273,6 +308,8 @@
         subMenu.addEventListener('click', (event) => event.stopPropagation());
     </script>
 
+
+    {{-- Chatbot AI --}}
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger chat-title="BKM_ChatBot" agent-id="5fbd1ad1-fe4a-461c-a33f-1a77fc18fded"
         language-code="vi"></df-messenger>

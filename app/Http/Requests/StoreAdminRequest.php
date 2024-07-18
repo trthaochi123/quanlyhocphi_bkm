@@ -38,16 +38,16 @@ class StoreAdminRequest extends FormRequest
     public function messages()
     {
         return [
-            'admin_name.required' => 'Admin name cannot be blank',
-            'admin_phone.required' => 'Phone number cannot be blank',
-            'admin_phone.regex' => 'Phone number must be valid',
-            'province.required' => 'Province field cannot be blank',
-            'district.required' => 'District field cannot be blank',
-            'street.required' => 'Street field cannot be blank',
-            'email.required' => 'Email field cannot be blank',
-            'password.required' => 'Password field cannot be blank',
-            'password.regex' => 'Password must be valid',
-            'password.min' => 'Password value must be larger than 0',
+            'admin_name.required' => 'Tên Quản toán viên không thể để trống',
+            'admin_phone.required' => 'Số điện thoại không thể để trống',
+            'admin_phone.regex' => 'Số điện thoại không hợp lệ',
+            'province.required' => 'Trường thành phố không thể để trống',
+            'district.required' => 'Trường quận không thể để trống',
+            'street.required' => 'Trường đường không thể để trống',
+            'email.required' => 'Trường email không thể để trống',
+            'password.required' => 'Mật khẩu không thể để trống',
+            'password.regex' => 'Mật khẩu không hợp lệ',
+            'password.min' => 'Mật khẩu phải lớn hơn 0',
         ];
     }
 }

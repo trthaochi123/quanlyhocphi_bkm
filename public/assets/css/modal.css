@@ -1,0 +1,80 @@
+.modal2{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.4);
+}
+.qr_code_img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.open-modal{
+    align-items: center;
+    background-clip: padding-box;
+    background-color: #1358c1;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: auto;
+    width: 150px;
+    margin-left: 20px;
+}
+
+@keyframes modalFadeIn{
+    from{
+        opacity:0;
+        transform: translateY(-100px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+.modal2.open{
+    display: flex;
+}
+
+.modal2-container {
+    border-radius: 8px;
+    background-color:#FFF;
+    width:400px;
+    min-height: 400px;
+    margin: 200px auto auto;
+    position:relative;
+    font-family: Calibri;
+    padding:20px;
+    animation:modalFadeIn ease 0.5s;
+}
+
+.modal-name {
+    text-align: center;
+    color: green;
+    font-size: 21px;
+    font-weight: 600;
+}
+

@@ -13,7 +13,7 @@ class StoreStartRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class StoreStartRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
         ];
     }
 }

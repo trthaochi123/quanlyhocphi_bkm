@@ -24,7 +24,14 @@ class UpdatePaymentMethodRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Phương thức thanh toán không được để trống'
         ];
     }
 }

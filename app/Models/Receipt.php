@@ -18,6 +18,7 @@ class Receipt extends Model
             ->join('accountants','receipts.accountant_id','=','accountants.id')
             ->select([
                 'receipts.*',
+                'students.class_id AS classId',
                 'students.student_name AS studentName',
                 'payment_methods.name AS methodName',
                 'accountants.accountant_name AS accountantName'

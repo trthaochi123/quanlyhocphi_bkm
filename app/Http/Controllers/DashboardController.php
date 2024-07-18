@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dashboard;
 use App\Http\Requests\StoreDashboardRequest;
 use App\Http\Requests\UpdateDashboardRequest;
+use App\Models\Blog;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -16,6 +17,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $blogs = DB::table('blogs')->paginate(1);
         $student = DB::table('students')->count();
         $admin = DB::table('admins')->count();
         $accountant = DB::table('accountants')->count();
@@ -38,9 +40,12 @@ class DashboardController extends Controller
             'total_debt',
             'total_debt_quarter',
             'total_debt_semester',
-            'total_debt_year'
+            'total_debt_year',
+            'blogs'
         ));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -49,7 +54,6 @@ class DashboardController extends Controller
      */
     public function create()
     {
-
     }
 
     /**

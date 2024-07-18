@@ -10,6 +10,7 @@ class BasicFee extends Model
 {
     use HasFactory;
     public $timestamps= false;
+    protected $fillable = ['major_id', 'academic_id', 'basic_fee_amount'];
 
     public function index(){
         $basic_fees = DB::table('basic_fees')
@@ -32,6 +33,8 @@ class BasicFee extends Model
                 'basic_fee_amount'=>$this->basic_fee_amount
             ]);
     }
+
+
     public function edit(){
         $basic_fees = DB::table('basic_fees')
             ->where([
@@ -60,10 +63,15 @@ class BasicFee extends Model
             ->delete();
     }
 
-    public  static function uniqueMajorAndAcademic($ignoreId = null){
+    public  static function uniqueMajorAndAcademic($majorId){
         {
-            $rule = 'unique:basic_fees,major_id,NULL,,academic_id,' . $ignoreId;
-            return [$rule];
+            return function ($attribute, $value, $fail) use ($majorId) {
+                if (self::where('major_id', $majorId)
+                    ->where('academic_id', $value)
+                    ->exists()) {
+                    $fail('Bản ghi đã tồn tại!');
+                }
+            };
         }
     }
 }

@@ -24,7 +24,15 @@ class UpdateBasicFeeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'basic_fee_amount' => ['required', 'regex:/^[1-9]+[0-9.]*$/', 'min:1'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'basic_fee_amount.required' => 'Mức học phí không thể để trống',
+            'basic_fee_amount.regex' => 'Mức học phí phải lớn hơn 0',
         ];
     }
 }

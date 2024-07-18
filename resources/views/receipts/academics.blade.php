@@ -43,14 +43,9 @@
                         </div>
                         <hr>
 
-                        <a href="#" class="sub-menu-link">
-                            <img src="{{ URL('image/help.png') }}" alt="" class="user-info">
-                            <p>Help</p>
-                            <span>></span>
-                        </a>
                         <a href="{{ route('admins.logout') }}" class="sub-menu-link">
                             <img src="{{ URL('image/logout.png') }}" alt="" class="user-info">
-                            <p>Log Out</p>
+                            <p>Đăng xuất</p>
                             <span>></span>
                         </a>
                     </div>
@@ -60,6 +55,7 @@
         <div class="main">
             <div class="sidebar">
                 <ul class="category">
+
                     <li>
                         <a href="{{ route('receipts.index') }}">
                             <span><i class="fas fa-receipt"></i>Phiếu Thu</span>
@@ -70,7 +66,7 @@
                             <span><i class="fas fa-user-graduate"></i>Sinh viên</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a>
                             <span><i class="fas fa-receipt"></i> Công Nợ</span>
                             <ul class="sub-nav">
@@ -79,7 +75,7 @@
                                 <li><a href="{{ route('receipts.debtByYears') }}">Công Nợ Năm</a></li>
                             </ul>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             <div class="navigate">

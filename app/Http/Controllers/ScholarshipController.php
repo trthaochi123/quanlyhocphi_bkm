@@ -7,6 +7,8 @@ use App\Http\Requests\StoreScholarshipRequest;
 use App\Http\Requests\UpdateScholarshipRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
+
 
 class ScholarshipController extends Controller
 {
@@ -42,10 +44,36 @@ class ScholarshipController extends Controller
      */
     public function store(StoreScholarshipRequest $request)
     {
-        $obj = new Scholarship();
-        $obj->scholarship_amount = $request->scholarship_amount;
-        $obj->store();
-        return Redirect::route('scholarships.index');
+        $validatedData = $request->validated();
+
+        // Kiểm tra trùng lặp class_name
+        $existsValidator = Validator::make($validatedData, [
+            'scholarship_amount' => [
+                'required',
+                'numeric',
+                'gt:0', // Kiểm tra nếu giá trị lớn hơn 0
+                function ($attribute, $value, $fail) {
+                    if (Scholarship::where('scholarship_amount', $value)->exists()) {
+                        $fail('Mức học bổng đã tồn tại.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($existsValidator->fails()) {
+            // Nếu validation thất bại, trả về với thông báo lỗi
+            return redirect()->back()->withErrors($existsValidator)->withInput();
+        }
+
+        if ($request->validated()){
+            $obj = new Scholarship();
+            $obj->scholarship_amount = $request->scholarship_amount;
+            $obj->store();
+            session()->flash('success', 'Đã tạo thành công!');
+            return Redirect::route('scholarships.index');
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**
@@ -85,11 +113,17 @@ class ScholarshipController extends Controller
      */
     public function update(UpdateScholarshipRequest $request, Scholarship $scholarship)
     {
-        $obj = new  Scholarship();
-        $obj->id = $request->id;
-        $obj->scholarship_amount = $request->scholarship_amount;
-        $obj->updateScholarship();
-        return Redirect::route('scholarships.index');
+        if ($request->validated()) {
+            $obj = new  Scholarship();
+            $obj->id = $request->id;
+            $obj->scholarship_amount = $request->scholarship_amount;
+            $obj->updateScholarship();
+            session()->flash('success', 'Cập nhật thành công!');
+            return Redirect::route('scholarships.index');
+        } else {
+            return Redirect::back();
+        }
+
     }
 
     /**
@@ -98,11 +132,26 @@ class ScholarshipController extends Controller
      * @param  \App\Models\Scholarship  $scholarship
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Scholarship $scholarship, Request $request)
+    // public function destroy(Scholarship $scholarship, Request $request)
+    // {
+    //     $obj = new Scholarship();
+    //     $obj->id = $request->id;
+    //     $obj->destroyScholarship();
+    //     session()->flash('success', 'Đã xoá thành công!');
+    //     return Redirect::route('scholarships.index');
+    // }
+
+    public function destroy($id)
     {
-        $obj = new Scholarship();
-        $obj->id = $request->id;
-        $obj->destroyScholarship();
-        return Redirect::route('scholarships.index');
+        $studentsCount = \DB::table('students')->where('scholarship_id', $id)->count();
+
+        // kiem tra xem co ban ghi tham chieu ko
+        if ($studentsCount > 0) {
+            return redirect()->back()->with('error', 'Không thể xóa Mức học bổng này vì vẫn còn Sinh viên tham chiếu đến nó.');
+        }
+
+        // Nếu không có bản ghi liên quan, tiến hành xóa
+        Scholarship::destroy($id);
+        return redirect()->route('scholarships.index')->with('success', 'Đã xóa thành công!');
     }
 }

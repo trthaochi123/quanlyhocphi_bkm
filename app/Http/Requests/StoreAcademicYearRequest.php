@@ -24,6 +24,18 @@ class StoreAcademicYearRequest extends FormRequest
     public function rules()
     {
         return [
+            'academic_start_year' => ['required'],
+            'academic_end_year' => ['required'],
+            'academic_name' => ['required'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'academic_start_year.required' => 'Bạn chưa chọn Năm bắt đầu',
+            'academic_end_year.required' => 'Bạn chưa chọn Năm kết thúc',
+            'academic_name.required' => 'Tên Niên khoá không được để trống',
 
         ];
     }

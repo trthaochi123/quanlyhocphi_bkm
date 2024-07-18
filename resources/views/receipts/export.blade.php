@@ -28,6 +28,7 @@
     </style>
 
     <script src="{{ URL::to('js/script.js') }}"></script>
+    {{-- <script src="{{ URL::to('js/qrcode.js') }}"></script> --}}
 </head>
 
 <body>
@@ -47,21 +48,16 @@
                             <img src="{{ URL('image/avatar.png') }}" alt="" class="user-info"
                                 style="width: 30px" height="30px">
                             <h2>
-                                @if (session()->has('admin'))
-                                    Chào, {{ session('admin')->admin_name }}
+                                @if (session()->has('accountant'))
+                                    Chào, {{ session('accountant')->accountant_name }}
                                 @endif
                             </h2>
                         </div>
                         <hr>
 
-                        <a href="#" class="sub-menu-link">
-                            <img src="{{ URL('image/help.png') }}" alt="" class="user-info">
-                            <p>Help</p>
-                            <span>></span>
-                        </a>
                         <a href="{{ route('admins.logout') }}" class="sub-menu-link">
                             <img src="{{ URL('image/logout.png') }}" alt="" class="user-info">
-                            <p>Log Out</p>
+                            <p>Đăng xuất</p>
                             <span>></span>
                         </a>
                     </div>
@@ -78,10 +74,10 @@
                     </li>
                     <li>
                         <a href="{{ route('receipts.academics') }}">
-                            <span><i class="fas fa-user-graduate"></i>Danh Sách Sinh Viên</span>
+                            <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a>
                             <span><i class="fas fa-receipt"></i> Công Nợ</span>
                             <ul class="sub-nav">
@@ -90,7 +86,7 @@
                                 <li><a href="{{ route('receipts.debtByYears') }}">Công Nợ Năm</a></li>
                             </ul>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             <div class="content">
@@ -116,7 +112,7 @@
                                     <h6>Người Nộp: {{ $receipt->submitter_name }}</h6>
                                     <h6>SĐT: {{ $receipt->submitter_phone }}</h6>
                                     <h6 class="border p-2 text-success">
-                                        Ghi chú: {{ $receipt->note }}
+                                        Nội dung: {{ $receipt->studentName }} {{ $receipt->note }}
                                     </h6>
                                 </div>
 
@@ -144,11 +140,23 @@
                                 <h5> {{ number_format($receipt->amount_of_money, 0, '', ',') }} VNĐ</h5>
                             </div>
                         </div>
+                        <br>
+                        <div class="sign-text">
+                            <p>Kế toán viên Ký</p>
+                        </div>
+                        <h6>
+                            @if (session()->has('accountant'))
+                                {{ session('accountant')->accountant_name }}
+                            @endif
+                        </h6>
                         <hr>
 
 
                     </div>
                 </div>
+
+
+                {{-- Print Button --}}
                 <div class="invoice-btns">
                     <button type="button" class="invoice-btn" onclick="printInvoice()">
                         <span><i class="fa-solid fa-print"></i></span>
@@ -165,47 +173,7 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#myDataTable').DataTable({
-                "columns": [{
-                        "data": "id"
-                    }, // Cột 1
-                    {
-                        "data": "studentName"
-                    }, // Cột 2
-                    {
-                        "data": "submitter_name"
-                    }, // Cột 3
-                    {
-                        "data": "submitter_phone"
-                    },
-                    {
-                        "data": "amount_of_money"
-                    },
-                    {
-                        "data": "amount_owned"
-                    },
-                    {
-                        "data": "methodName"
-                    },
-                    {
-                        "data": "payment_date_time"
-                    },
-                    {
-                        "data": "accountantName"
-                    },
-                    {
-                        "data": "note"
-                    }, // Cột 4
-                    {
-                        "defaultContent": "" // Cột giả với nội dung mặc định
-                    },
-                ]
-            });
-        });
-    </script>
+
 
     <script>
         let subMenu = document.getElementById("subMenu");
@@ -223,6 +191,22 @@
         }
 
         subMenu.addEventListener('click', (event) => event.stopPropagation());
+    </script>
+
+    <script>
+        const qr_code_img = document.querySelector(".qr_code_img");
+        let MY_BANK = {
+            BANK_ID: "Vietcombank",
+            ACCOUNT_NO: "0451000327899",
+        }
+
+        let receiptAmount = {{ $receipt->amount_of_money }};
+        let desriptionTransaction = "{{ $receipt->submitter_name }} Chuyen Khoan Hoc Phi";
+        let QR = `https://img.vietqr.io/image/${MY_BANK.BANK_ID}-${MY_BANK.ACCOUNT_NO}-qr_only.png?amount=${receiptAmount}&addInfo=${desriptionTransaction}`
+        qr_code_img.src = QRZ
+
+
+        document.addEventListener("DOMContentLoaded", () => {});
     </script>
 </body>
 

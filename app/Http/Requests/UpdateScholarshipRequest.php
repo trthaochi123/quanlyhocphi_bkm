@@ -24,7 +24,15 @@ class UpdateScholarshipRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'scholarship_amount' => ['required', 'regex:/^[0-9]+[0-9.]*$/','min:1'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'scholarship_amount.required' => 'Bạn chưa nhập mức học bổng',
+            'scholarship_amount.regex' => 'Mức học bổng phải là số',
         ];
     }
 }

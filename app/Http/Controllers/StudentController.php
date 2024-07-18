@@ -9,6 +9,7 @@ use App\Models\Scholarship;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\Receipt;
 use App\Models\StudyClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -60,28 +61,62 @@ class StudentController extends Controller
      * @param  \App\Http\Requests\StoreStudentRequest  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(StoreStudentRequest $request)
+    // {
+    //     if ($request->validated()){
+    //         $obj = new Student();
+    //         $obj->student_name = $request->student_name;
+    //         $obj->student_dob = $request->student_dob;
+    //         $obj->student_phone = $request->student_phone;
+    //         $obj->student_parent_phone = $request->student_parent_phone;
+    //         $obj->province = $request->province;
+    //         $obj->district = $request->district;
+    //         $obj->street = $request->street;
+    //         $obj->class_id = $request->class_id;
+    //         $obj->scholarship_id = $request->scholarship_id;
+    //         $obj->payment_type_id = $request->payment_type_id;
+    //         $obj->total_fee = $request->total_fee;
+    //         $obj->amount_each_time = $request->amount_each_time;
+    //         $obj->tuition_status = $request->tuition_status;
+    //         $obj->debt = $request->debt;
+    //         $obj->store();
+    //         session()->flash('success', 'Đã tạo thành công!');
+    //         return Redirect::route('students.studentFilter',[
+    //                 'id'=>$obj->class_id
+    //             ]
+    //         );
+    //     } else {
+    //         return Redirect::back();
+    //     }
+
+    // }
+
     public function store(StoreStudentRequest $request)
     {
-        $obj = new Student();
-        $obj->student_name = $request->student_name;
-        $obj->student_dob = $request->student_dob;
-        $obj->student_phone = $request->student_phone;
-        $obj->student_parent_phone = $request->student_parent_phone;
-        $obj->province = $request->province;
-        $obj->district = $request->district;
-        $obj->street = $request->street;
-        $obj->class_id = $request->class_id;
-        $obj->scholarship_id = $request->scholarship_id;
-        $obj->payment_type_id = $request->payment_type_id;
-        $obj->total_fee = $request->total_fee;
-        $obj->amount_each_time = $request->amount_each_time;
-        $obj->tuition_status = $request->tuition_status;
-        $obj->debt = $request->debt;
-        $obj->store();
-        return Redirect::route('students.studentFilter',[
-                'id'=>$obj->class_id
-            ]
-        );
+        if ($request->validated()){
+            $obj = new Student();
+            $obj->student_name = $request->student_name;
+            $obj->student_dob = $request->student_dob;
+            $obj->student_phone = $request->student_phone;
+            $obj->student_parent_phone = $request->student_parent_phone;
+            $obj->province = $request->province;
+            $obj->district = $request->district;
+            $obj->street = $request->street;
+            $obj->class_id = $request->class_id;
+            $obj->scholarship_id = $request->scholarship_id;
+            $obj->payment_type_id = $request->payment_type_id;
+            $obj->total_fee = $request->total_fee;
+            $obj->amount_each_time = $request->amount_each_time;
+            $obj->debt = $request->debt;
+            $obj->store();
+            return Redirect::route('students.studentFilter',[
+                    'id'=>$obj->class_id
+                ]
+            );
+        } else {
+            return Redirect::back();
+        }
+
     }
 
     /**
@@ -105,8 +140,10 @@ class StudentController extends Controller
     {
         $obj1 = new StudyClass();
         $classes = $obj1->index();
+
         $obj2 = new Scholarship();
         $scholarships = $obj2->index();
+
         $obj3 = new PaymentType();
         $payment_types = $obj3->index();
         $obj4 = new BasicFee();
@@ -114,6 +151,7 @@ class StudentController extends Controller
 
         $obj4 = new Student();
         $obj4->id = $request->id;
+
         $students = $obj4->edit();
         return view('students.edit',[
             'classes'=>$classes,
@@ -148,7 +186,6 @@ class StudentController extends Controller
         $obj->class_id = $request->class_id;
         $obj->scholarship_id = $request->scholarship_id;
         $obj->payment_type_id = $request->payment_type_id;
-        $obj->tuition_status = $request->tuition_status;
         $obj->debt = $request->debt;
         $obj->updateStudent();
         return Redirect::route('students.studentFilter',[
@@ -163,16 +200,42 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
+    // public function destroy(Student $student, Request $request)
+    // {
+    //     $obj = new Student();
+    //     $obj->id = $request->id;
+    //     $obj->destroyStudent();
+    //     session()->flash('success', 'Đã xoá thành công!');
+    //     $class_id = $request->class_id;
+    //     return Redirect::route('students.studentFilter',[
+    //         'id'=>$class_id
+    //     ]);
+    // }
+
     public function destroy(Student $student, Request $request)
-    {
-        $obj = new Student();
-        $obj->id = $request->id;
-        $obj->destroyStudent();
-        $class_id = $request->class_id;
-        return Redirect::route('students.studentFilter',[
-            'id'=>$class_id
-        ]);
+{
+    // Lấy ID của sinh viên từ request,su dung $student_id để thực hiện các thao tác như kiểm tra và xóa sinh viên từ cơ sở dữ liệ
+    $student_id = $request->id;
+
+    // Kiểm tra xem có bản ghi tham chiếu trong receipts không
+    $receiptsCount = Receipt::where('student_id', $student_id)->count();
+
+    // Nếu có bản ghi tham chiếu, thông báo không thể xóa
+    if ($receiptsCount > 0) {
+        return redirect()->route('students.studentFilter', ['id' => $request->class_id])
+                         ->with('error', 'Không thể xóa Sinh viên này vì vẫn còn Phiếu thu tham chiếu đến nó.');
     }
+
+    // Nếu không có bản ghi tham chiếu, tiến hành xóa sinh viên
+    Student::destroy($student_id);
+
+    // Redirect về trang danh sách sinh viên với thông báo thành công
+    return redirect()->route('students.studentFilter', ['id' => $request->class_id])
+                     ->with('success', 'Đã xoá thành công!');
+}
+
+
+
     public function debtByQuarter(){
         $obj = new Student();
         $studentByQuarters = $obj->debtByQuarter();
@@ -180,6 +243,7 @@ class StudentController extends Controller
             'studentByQuarters'=>$studentByQuarters
         ]);
     }
+
     public function debtBySemester(){
         $obj = new Student();
         $studentBySemesters = $obj->debtBySemester();
@@ -187,6 +251,7 @@ class StudentController extends Controller
             'studentBySemesters'=>$studentBySemesters
         ]);
     }
+
     public function debtByYear(){
         $obj = new Student();
         $studentByYears = $obj->debtByYear();
@@ -194,6 +259,7 @@ class StudentController extends Controller
             'studentByYears'=>$studentByYears
         ]);
     }
+
     public function studentFilter(Request $request){
         $obj = new Student();
         $obj->class_id = $request->id;

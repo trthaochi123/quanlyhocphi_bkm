@@ -7,6 +7,7 @@ use App\Http\Requests\StoreMajorRequest;
 use App\Http\Requests\UpdateMajorRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class MajorController extends Controller
 {
@@ -19,8 +20,8 @@ class MajorController extends Controller
     {
         $obj = new Major();
         $majors = $obj->index();
-        return view('majors.index',[
-            'majors'=>$majors
+        return view('majors.index', [
+            'majors' => $majors
         ]);
     }
 
@@ -42,10 +43,34 @@ class MajorController extends Controller
      */
     public function store(StoreMajorRequest $request)
     {
-        $obj = new Major();
-        $obj->name = $request->name;
-        $obj->store();
-        return Redirect::route('majors.index');
+        $validatedData = $request->validated();
+
+        // Kiểm tra trùng lặp class_name
+        $existsValidator = Validator::make($validatedData, [
+            'name' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (Major::where('name', $value)->exists()) {
+                        $fail('Ngành học với tên này đã tồn tại.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($existsValidator->fails()) {
+            // Nếu validation thất bại, trả về với thông báo lỗi
+            return redirect()->back()->withErrors($existsValidator)->withInput();
+        }
+
+        if ($request->validated()) {
+            $obj = new Major();
+            $obj->name = $request->name;
+            $obj->store();
+            session()->flash('success', 'Đã tạo thành công!');
+            return Redirect::route('majors.index');
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**
@@ -70,9 +95,9 @@ class MajorController extends Controller
         $obj = new Major();
         $obj->id = $request->id;
         $major = $obj->edit();
-        return view('majors.edit',[
+        return view('majors.edit', [
             'majors' => $major,
-            'id'=> $obj->id
+            'id' => $obj->id
         ]);
     }
 
@@ -85,11 +110,17 @@ class MajorController extends Controller
      */
     public function update(UpdateMajorRequest $request, Major $major)
     {
-        $obj = new Major();
-        $obj->id = $request->id;
-        $obj->name = $request->name;
-        $obj->updateMajor();
-        return Redirect::route('majors.index');
+        if ($request->validated()){
+            $obj = new Major();
+            $obj->id = $request->id;
+            $obj->name = $request->name;
+            $obj->updateMajor();
+            session()->flash('success', 'Cập nhật thành công!');
+            return Redirect::route('majors.index');
+        } else {
+            return Redirect::back();
+        }
+
     }
 
     /**
@@ -98,11 +129,27 @@ class MajorController extends Controller
      * @param  \App\Models\Major  $major
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Major $major, Request $request)
+    // public function destroy(Major $major, Request $request)
+    // {
+    //     $obj = new Major();
+    //     $obj->id = $request->id;
+    //     $obj->destroyMajor();
+    //     session()->flash('success', 'Đã xoá thành công!');
+    //     return Redirect::route('majors.index');
+    // }
+
+    public function destroy($id)
     {
-        $obj = new Major();
-        $obj->id = $request->id;
-        $obj->destroyMajor();
-        return Redirect::route('majors.index');
+        // xoa ban ghi trong bang basic_fees ma co major_id do
+        $basic_feesCount = \DB::table('basic_fees')->where('major_id', $id)->count();
+
+        // kiem tra xem co ban ghi tham chieu ko
+        if ($basic_feesCount > 0) {
+            return redirect()->back()->with('error', 'Không thể xóa Chuyên ngành này vì vẫn còn Mức học phí tham chiếu đến nó.');
+        }
+
+        // Nếu không có bản ghi liên quan, tiến hành xóa
+        Major::destroy($id);
+        return redirect()->route('majors.index')->with('success', 'Đã xóa thành công!');
     }
 }

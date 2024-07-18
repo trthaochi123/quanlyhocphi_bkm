@@ -24,7 +24,32 @@ class StoreStudentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'student_name' => ['required'],
+            'student_dob' => ['required'],
+            'student_phone' => ['required', 'regex:/^[0-9]+[0-9.]*$/'],
+            'province' => ['required'],
+            'district' => ['required'],
+            'street' => ['required'],
+            'student_parent_phone' => ['required', 'regex:/^\+[0-9]+[0-9.]*$/'],
+            'tuition_status' => ['required', 'regex:/^[0-9]+[0-9.]*$/'],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'student_name.required' => 'Tên sinh viên không thể để trống',
+            'student_dob.required' => 'Bạn chưa chọn ngày sinh của sinh viên',
+            'student_phone.required' => 'SĐT không thể để trống',
+            'student_phone.regex' => 'SĐT không hợp lệ',
+            'province.required' => 'Trường thành phố không thể để trống',
+            'district.required' => 'Trường quận không thể để trống',
+            'street.required' => 'Trường đường không thể để trống',
+            'student_parent_phone.required' => 'không thể để trống',
+            'student_parent_phone.regex' => 'SĐT phụ huynh không hợp lệ',
+            'tuition_status.required' => 'Trạng thái học phí không thể để trống',
+            'tuition_status.regex' => 'Trạng thái học phí không hợp lệ',
+        ];
+    }
+
 }

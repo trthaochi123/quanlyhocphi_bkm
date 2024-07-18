@@ -16,7 +16,44 @@
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/class.css') }}">
-    <title>Student list</title>
+    <title>Danh Sách Sinh Viên</title>
+    {{-- style cho modal thong bao action--}}
+    <style>
+        #success-message {
+            position: fixed;
+            top: 20px;
+            right: -300px;
+            /* Vị trí ban đầu nằm ngoài màn hình */
+            transition: right 0.5s ease-in-out;
+            z-index: 9999;
+            /* ở trên các phần tử khác */
+
+        }
+
+        #success-message.show {
+            right: 20px;
+            /* Vị trí sau khi trượt vào màn hình */
+
+        }
+
+        /* modal action delete */
+        #error-message {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            /* Vị trí ban đầu nằm ngoài màn hình */
+            transition: right 0.5s ease-in-out;
+            z-index: 9999;
+            /* ở trên các phần tử khác */
+
+        }
+
+        #error-message.show {
+            right: 20px;
+            /* Vị trí sau khi trượt vào màn hình */
+
+        }
+    </style>
 </head>
 
 <body>
@@ -43,14 +80,9 @@
                         </div>
                         <hr>
 
-                        <a href="#" class="sub-menu-link">
-                            <img src="{{ URL('image/help.png') }}" alt="" class="user-info">
-                            <p>Help</p>
-                            <span>></span>
-                        </a>
                         <a href="{{ route('admins.logout') }}" class="sub-menu-link">
                             <img src="{{ URL('image/logout.png') }}" alt="" class="user-info">
-                            <p>Log Out</p>
+                            <p>Đăng xuất</p>
                             <span>></span>
                         </a>
                     </div>
@@ -62,57 +94,62 @@
                 <ul class="category">
                     <li>
                         <a href="{{ route('dashboards.index') }}">
-                            <span><i class="fas fa-tachometer-alt"></i>Dashboard</span>
+                            <span><i class="fas fa-tachometer-alt"></i>Thống Kê</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admins.index') }}">
-                            <span><i class="fa fa-user"></i>Administrators</span>
+                            <span><i class="fa fa-user"></i>Quản Trị Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('students.academics') }}">
-                            <span><i class="fas fa-user-graduate"></i>Students Management</span>
+                            <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('academics.index') }}">
-                            <span><i class="fas fa-calendar"></i>Academic Years</span>
+                            <span><i class="fas fa-calendar"></i>Niên Khoá</span>
                         </a>
                     </li>
                     <li>
                         <a href=" {{ route('study_classes.index') }}">
-                            <span><i class="fas fa-home"></i>Classes Management</span>
+                            <span><i class="fas fa-home"></i>Lớp Học</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('majors.index') }}">
-                            <span><i class="fas fa-network-wired"></i>Majors Management</span>
+                            <span><i class="fas fa-network-wired"></i>Chuyên Ngành</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('accountants.index') }}">
-                            <span><i class="fas fa-file-plus"></i>Accountants Management</span>
+                            <span><i class="fas fa-file-plus"></i>Kế Toán Viên</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('payment_methods.index') }}">
-                            <span><i class="fas fa-cash-register"></i>Payment Methods</span>
+                            <span><i class="fas fa-cash-register"></i>Phương Thức Thanh Toán</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('basic_fees.index') }}">
-                            <span><i class="fas fa-money-bill"></i>Basic Fees</span>
+                            <span><i class="fas fa-money-bill"></i>Học Phí Cơ Bản</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('scholarships.index') }}">
-                            <span><i class="fas fa-gift"></i>Scholarships Level</span>
+                            <span><i class="fas fa-gift"></i>Mức Học Bổng</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('payment_types.index') }}">
-                            <span><i class="fas fa-meteor"></i>Payment Types</span>
+                            <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
                         </a>
                     </li>
                 </ul>
@@ -126,7 +163,7 @@
                         @foreach ($classes as $class)
                             <a href="{{ route('students.create', $class->id) }}">
                                 <i class="fas fa-plus"></i>
-                                Add
+                                Thêm
                             </a>
                         @endforeach
                     </div>
@@ -143,7 +180,7 @@
                                     <th>Tên lớp</th>
                                     <th>Học bổng</th>
                                     <th>Tổng học phí</th>
-                                    <th>Số tiền đóng/lần</th>
+                                    <th>Số tiền đóng/đợt</th>
                                     <th>Kiểu đóng</th>
                                     <th>SDT phụ huynh </th>
                                     <th class="right" colspan="2">Action</th>
@@ -156,8 +193,8 @@
                                         <td>{{ $student->student_name }}</td>
                                         <td>{{ $student->student_dob }}</td>
                                         <td>{{ $student->student_phone }}</td>
-                                        <td>{{ $student->province }} province, {{ $student->district }} district,
-                                            {{ $student->street }} street</td>
+                                        <td>Thành phố {{ $student->province }}, Quận {{ $student->district }}, Đường
+                                            {{ $student->street }}</td>
                                         <td>{{ $student->className }}</td>
                                         <td>{{ number_format($student->scholarship, 0, '', ',') }}</td>
                                         <td>{{ number_format($student->total_fee, 0, '', ',') }}</td>
@@ -173,7 +210,8 @@
                                         </td>
                                         <td class="btn-delete">
                                             <form method="post"
-                                                action="{{ route('students.destroy', [$student->class_id, $student->id]) }}">
+                                                action="{{ route('students.destroy', [$student->class_id, $student->id]) }}"
+                                                onsubmit="return confirmDelete(event)">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="delete-block">
@@ -188,6 +226,18 @@
                             </tbody>
                         </table>
                     </div>
+                    {{-- modal --}}
+                @if (session('success'))
+                <div id="success-message" class="alert alert-success slide-in">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div id="error-message" class="alert alert-danger slide-in">
+                    {{ session('error') }}
+                </div>
+            @endif
                 </div>
             </div>
         </div>
@@ -269,6 +319,43 @@
 
         subMenu.addEventListener('click', (event) => event.stopPropagation());
     </script>
+
+    {{-- Modal thong bao action --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hàm xử lý thông báo
+            function handleNotification(elementId) {
+                const notificationElement = document.getElementById(elementId);
+                if (notificationElement) {
+                    // Thêm lớp 'show' để kích hoạt hiệu ứng trượt vào
+                    setTimeout(() => {
+                        notificationElement.classList.add('show');
+                    }, 100); // Đợi 100ms để đảm bảo phần tử được render trước khi thêm lớp 'show'
+
+                    // Làm thông báo biến mất sau 4 giây
+                    setTimeout(() => {
+                        notificationElement.style.display = 'none';
+                    }, 4000);
+                }
+            }
+
+            handleNotification('success-message');
+
+            handleNotification('error-message');
+        });
+    </script>
+
+    {{-- function confirm delete/submit event --}}
+    <script>
+        function confirmDelete(event) {
+            event.preventDefault(); // Ngăn chặn hành động submit mặc định
+            const confirmation = confirm('Bạn có chắc chắn muốn xoá?');
+            if (confirmation) {
+                event.target.submit();
+            }
+        }
+    </script>
+
 </body>
 
 </html>
