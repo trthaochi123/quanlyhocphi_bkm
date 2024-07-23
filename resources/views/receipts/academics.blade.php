@@ -55,7 +55,11 @@
         <div class="main">
             <div class="sidebar">
                 <ul class="category">
-
+                    <li>
+                        <a href="{{ route('receipts.dashboard') }}">
+                            <span><i class="fas fa-receipt"></i>Thống Kê</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ route('receipts.index') }}">
                             <span><i class="fas fa-receipt"></i>Phiếu Thu</span>
