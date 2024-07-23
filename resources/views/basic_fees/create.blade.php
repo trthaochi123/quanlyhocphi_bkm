@@ -94,7 +94,7 @@
                     </li>
                     <li>
                         <a href="{{ route('basic_fees.index') }}">
-                            <span><i class="fas fa-money-bill"></i>>Học Phí Cơ Bản</span>
+                            <span><i class="fas fa-money-bill"></i>Học Phí Cơ Bản</span>
                         </a>
                     </li>
                     <li>
