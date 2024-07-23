@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admins.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
-    <title>>Học Phí Cơ Bản - Chỉnh sửa</title>
+    <title>Học Phí Cơ Bản - Chỉnh sửa</title>
 </head>
 
 <body>
