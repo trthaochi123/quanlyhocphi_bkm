@@ -111,7 +111,7 @@ class AdminController extends Controller
             $obj->email = $request->email;
             $obj->password = bcrypt($request->get('password'));
             $obj->updateAdmin();
-            session()->flash('success', 'Cập nhât thành công!');
+            session()->flash('success', 'Cập nhật thành công!');
             return Redirect::route('admins.index');
         } else Redirect::back();
     }
