@@ -24,7 +24,7 @@ class StoreScholarshipRequest extends FormRequest
     public function rules()
     {
         return [
-            'scholarship_amount' => ['required', 'regex:/^[1-9]+[0-9.]*$/','min:1'],
+            'scholarship_amount' => ['required', 'regex:/^[0-9]+[0-9.]*$/','min:1'],
         ];
     }
 
@@ -32,7 +32,7 @@ class StoreScholarshipRequest extends FormRequest
     {
         return [
             'scholarship_amount.required' => 'Bạn chưa nhập mức học bổng',
-            'scholarship_amount.regex' => 'Mức học bổng phải là số và lớn hơn 0',
+            'scholarship_amount.regex' => 'Mức học bổng phải là số',
         ];
     }
 }
