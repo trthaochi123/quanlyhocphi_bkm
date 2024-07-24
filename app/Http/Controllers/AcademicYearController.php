@@ -115,6 +115,26 @@ class AcademicYearController extends Controller
      */
     public function update(UpdateAcademicYearRequest $request, AcademicYear $academicYear)
     {
+        $validated = $request->validated();
+        $startYear = date('Y', strtotime($validated['academic_start_year']));
+        $endYear = date('Y', strtotime($validated['academic_end_year']));
+
+        $existsValidator = Validator::make($validated, [
+            'academic_start_year' => [
+                'required',
+                function ($attribute, $value, $fail) use ($startYear, $endYear) {
+                    if (AcademicYear::whereYear('academic_start_year', $startYear)
+                        ->whereYear('academic_end_year', $endYear)
+                        ->exists()) {
+                        $fail('Niên khóa với năm bắt đầu và kết thúc này đã tồn tại.');
+                    }
+                },
+            ],
+        ]);
+        if ($existsValidator->fails()) {
+            // Nếu validation thất bại, trả về với thông báo lỗi
+            return redirect()->back()->withErrors($existsValidator)->withInput();
+        }
         if ($request->validated()){
             $obj = new AcademicYear();
             $obj->id = $request->id;
