@@ -13,6 +13,7 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/admins.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('image/favicon.png') }}"/>
     <title>Danh Sách Lớp Học</title>
     {{-- style cho modal thong bao action --}}
     <style>
