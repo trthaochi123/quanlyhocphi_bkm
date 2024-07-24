@@ -107,7 +107,6 @@ class AccountantController extends Controller
             $obj->district = $request->district;
             $obj->street = $request->street;
             $obj->email = $request->email;
-            $obj->password = bcrypt($request->get('password'));
             $obj->updateAccountant();
             session()->flash('success', 'Cập nhật thành công!');
             return Redirect::route('accountants.index');
