@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/class.css') }}">
-
+    <link rel="shortcut icon" type="image/png" href="{{ asset('image/favicon.png') }}"/>
     <title>Danh sách sinh viên</title>
 
     <script src="{{ URL::to('js/table2excel.js') }}"></script>
