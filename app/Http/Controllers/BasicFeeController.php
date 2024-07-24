@@ -175,10 +175,21 @@ class BasicFeeController extends Controller
     public function destroy(BasicFee $basicFee, Request $request)
     {
         $obj = new BasicFee();
-        $obj->major_id = $request->major_id;
-        $obj->academic_id = $request->academic_id;
-        $obj->destroyBasicFee();
-        session()->flash('success', 'Đã xoá thành công!');
-        return Redirect::route('basic_fees.index');
+        $studyClassesCount = \DB::table('study_classes')
+            ->where('major_id', $request->major_id)
+            ->where('academic_id', $request->academic_id)
+            ->count();
+
+        if ($studyClassesCount > 0) {
+            return redirect()->back()->with('error', 'Không thể xóa Học phí cơ bản này vì vẫn được sử dụng.');
+        } else {
+            $obj->major_id = $request->major_id;
+            $obj->academic_id = $request->academic_id;
+            // Nếu không có bản ghi liên quan, tiến hành xóa
+            $obj->destroyBasicFee();
+            session()->flash('success', 'Đã xóa thành công!');
+        }
+
+        return redirect()->route('basic_fees.index');
     }
 }
