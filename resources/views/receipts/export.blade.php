@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/print_receipt.css') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('image/favicon.png') }}"/>
     <title>Receipts Export</title>
     <style>
         .text-container {
