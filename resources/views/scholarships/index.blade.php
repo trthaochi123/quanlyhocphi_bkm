@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admins.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('image/favicon.png') }}"/>
     <title>Danh Sách Mức Học Bổng</title>
     <style>
         #success-message {
