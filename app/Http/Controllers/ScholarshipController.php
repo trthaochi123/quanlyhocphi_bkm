@@ -51,7 +51,6 @@ class ScholarshipController extends Controller
             'scholarship_amount' => [
                 'required',
                 'numeric',
-                'gt:0', // Kiểm tra nếu giá trị lớn hơn 0
                 function ($attribute, $value, $fail) {
                     if (Scholarship::where('scholarship_amount', $value)->exists()) {
                         $fail('Mức học bổng đã tồn tại.');
