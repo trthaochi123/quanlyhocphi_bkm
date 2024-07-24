@@ -112,6 +112,25 @@ class PaymentTypeController extends Controller
      */
     public function update(UpdatePaymentTypeRequest $request, PaymentType $paymentType)
     {
+        $validatedData = $request->validated();
+
+        // Kiểm tra trùng lặp class_name
+        $existsValidator = Validator::make($validatedData, [
+            'payment_type_name' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (PaymentType::where('payment_type_name', $value)->exists()) {
+                        $fail('Kiểu đóng đã tồn tại.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($existsValidator->fails()) {
+            // Nếu validation thất bại, trả về với thông báo lỗi
+            return redirect()->back()->withErrors($existsValidator)->withInput();
+        }
+        
         if ($request->validated()){
             $obj = new PaymentType();
             $obj->id = $request->id;
