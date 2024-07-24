@@ -46,7 +46,6 @@ class Admin extends Model implements \Illuminate\Contracts\Auth\Authenticatable
                 'district'=>$this->district,
                 'street'=>$this->street,
                 'email'=>$this->email,
-                'password'=>$this->password
             ]);
     }
 
