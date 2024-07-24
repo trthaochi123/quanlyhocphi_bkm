@@ -110,6 +110,25 @@ class PaymentMethodController extends Controller
      */
     public function update(UpdatePaymentMethodRequest $request, PaymentMethod $paymentMethod)
     {
+        $validatedData = $request->validated();
+
+        // Kiểm tra trùng lặp class_name
+        $existsValidator = Validator::make($validatedData, [
+            'name' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (PaymentMethod::where('name', $value)->exists()) {
+                        $fail('Phương thức thanh toán này đã tồn tại.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($existsValidator->fails()) {
+            // Nếu validation thất bại, trả về với thông báo lỗi
+            return redirect()->back()->withErrors($existsValidator)->withInput();
+        }
+        
         if ($request->validated()){
             $obj = new PaymentMethod();
             $obj->id = $request->id;
