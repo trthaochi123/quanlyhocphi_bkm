@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create_receipt.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}">
-
+    <link rel="shortcut icon" type="image/png" href="{{ asset('image/favicon.png') }}"/>
     <title>Receipts list</title>
 </head>
 
