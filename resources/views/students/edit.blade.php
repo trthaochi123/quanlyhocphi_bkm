@@ -264,15 +264,7 @@
                                                 type="text" id="amount_each_time"
                                                 class="form-control form-control-sm" />
                                         </div>
-                                        <div class="mt-3 mb-3">
-                                            <label for="tuition_status">Trạng thái học phí</label>
-                                            <input value="{{ $student->tuition_status }}" name="tuition_status"
-                                                type="text" id="tuition_status"
-                                                class="form-control form-control-sm" />
-                                            @if ($errors->has('tuition_status'))
-                                                <span class="text-danger">{{ $errors->first('tuition_status') }}</span>
-                                            @endif
-                                        </div>
+                
                                         <div class="mt-3 mb-3">
                                             <label for="debt">Công nợ</label>
                                             <input name="debt" value="{{ $student->debt }}" type="text"
