@@ -109,6 +109,7 @@ class StudentController extends Controller
             $obj->amount_each_time = $request->amount_each_time;
             $obj->debt = $request->debt;
             $obj->store();
+            session()->flash('success', 'Đã tạo thành công!');
             return Redirect::route('students.studentFilter',[
                     'id'=>$obj->class_id
                 ]
@@ -188,6 +189,7 @@ class StudentController extends Controller
         $obj->payment_type_id = $request->payment_type_id;
         $obj->debt = $request->debt;
         $obj->updateStudent();
+        session()->flash('success', 'Cập nhật thành công!');
         return Redirect::route('students.studentFilter',[
             'id'=>$obj->class_id
         ]);
