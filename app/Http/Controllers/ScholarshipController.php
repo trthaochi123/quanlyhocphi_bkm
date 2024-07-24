@@ -112,6 +112,26 @@ class ScholarshipController extends Controller
      */
     public function update(UpdateScholarshipRequest $request, Scholarship $scholarship)
     {
+        $validatedData = $request->validated();
+
+        // Kiểm tra trùng lặp class_name
+        $existsValidator = Validator::make($validatedData, [
+            'scholarship_amount' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if (Scholarship::where('scholarship_amount', $value)->exists()) {
+                        $fail('Mức học bổng đã tồn tại.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($existsValidator->fails()) {
+            // Nếu validation thất bại, trả về với thông báo lỗi
+            return redirect()->back()->withErrors($existsValidator)->withInput();
+        }
+        
         if ($request->validated()) {
             $obj = new  Scholarship();
             $obj->id = $request->id;
