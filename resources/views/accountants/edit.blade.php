@@ -181,14 +181,7 @@
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
                                 </div>
-                                <div class="mt-3 mb-3">
-                                    <label for="password">Mật khẩu</label>
-                                    <input value="{{ $accountant->password }}" name="password" type="password"
-                                        id="password" class="form-control form-control-sm" />
-                                        @if ($errors->has('password'))
-                                <span class="text-danger">{{ $errors->first('password') }}</span>
-                                @endif
-                                </div>
+                                
                         @endforeach
                         <div>
                             <button class="btn-save">Lưu</button>
