@@ -47,7 +47,6 @@ class Accountant extends Model implements \Illuminate\Contracts\Auth\Authenticat
                 'district'=>$this->district,
                 'street'=>$this->street,
                 'email'=>$this->email,
-                'password'=>$this->password
             ]);
     }
     public function destroyAccountant(){
