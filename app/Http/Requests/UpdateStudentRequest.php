@@ -31,7 +31,7 @@ class UpdateStudentRequest extends FormRequest
             'district' => ['required'],
             'street' => ['required'],
             'student_parent_phone' => ['required', 'regex:/^\+[0-9]+[0-9.]*$/'],
-            'tuition_status' => ['required', 'regex:/^[0-9]+[0-9.]*$/'],
+         
         ];
     }
 
@@ -47,8 +47,7 @@ class UpdateStudentRequest extends FormRequest
             'street.required' => 'Trường đường không thể để trống',
             'student_parent_phone.required' => 'không thể để trống',
             'student_parent_phone.regex' => 'SĐT phụ huynh không hợp lệ',
-            'tuition_status.required' => 'Trạng thái học phí không thể để trống',
-            'tuition_status.regex' => 'Trạng thái học phí không hợp lệ',
+            
         ];
     }
 }
