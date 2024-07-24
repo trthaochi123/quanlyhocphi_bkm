@@ -110,6 +110,25 @@ class MajorController extends Controller
      */
     public function update(UpdateMajorRequest $request, Major $major)
     {
+        $validatedData = $request->validated();
+
+        // Kiểm tra trùng lặp class_name
+        $existsValidator = Validator::make($validatedData, [
+            'name' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (Major::where('name', $value)->exists()) {
+                        $fail('Ngành học với tên này đã tồn tại.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($existsValidator->fails()) {
+            // Nếu validation thất bại, trả về với thông báo lỗi
+            return redirect()->back()->withErrors($existsValidator)->withInput();
+        }
+        
         if ($request->validated()){
             $obj = new Major();
             $obj->id = $request->id;
