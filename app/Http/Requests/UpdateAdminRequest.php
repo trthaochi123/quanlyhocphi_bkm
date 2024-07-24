@@ -30,7 +30,6 @@ class UpdateAdminRequest extends FormRequest
             'district' => ['required'],
             'street' => ['required'],
             'email' => ['required'],
-            'password' => ['required'],
         ];
     }
 
@@ -44,7 +43,6 @@ class UpdateAdminRequest extends FormRequest
             'district.required' => 'Trường quận không thể để trống',
             'street.required' => 'Trường đường không thể để trống',
             'email.required' => 'Trường email không thể để trống',
-            'password.required' => 'Mật khẩu không thể để trống',
         ];
     }
 }
