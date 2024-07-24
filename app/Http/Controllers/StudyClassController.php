@@ -130,6 +130,25 @@ class StudyClassController extends Controller
      */
     public function update(UpdateStudyClassRequest $request, StudyClass $studyClass)
     {
+        $validatedData = $request->validated();
+
+        // Kiểm tra trùng lặp class_name
+        $existsValidator = Validator::make($validatedData, [
+            'class_name' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (StudyClass::where('class_name', $value)->exists()) {
+                        $fail('Lớp học với tên này đã tồn tại.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($existsValidator->fails()) {
+            // Nếu validation thất bại, trả về với thông báo lỗi
+            return redirect()->back()->withErrors($existsValidator)->withInput();
+        }
+        
         if ($request->validated()){
             $obj = new StudyClass();
             $obj->id = $request->id;
