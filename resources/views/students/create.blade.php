@@ -321,7 +321,7 @@
                 // Update giao dien input field
                 totalFeeInput.value = totalFee.toFixed(2);
                 paymentTimesDropdown.value = amountEachTime.toFixed(2);
-                debt.value = amountEachTime.toFixed(2);
+                debt.value = totalFee.toFixed(2);
             }
 
 
