@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="payment_date_time">Vào lúc</label>
-                                    <input style="width: 184px" name="payment_date_time" type="datetime-local" id="payment_date_time" value="YYYY-MM-DD THH:MM:SS"/>
+                                    <input readonly style="width: 184px" name="payment_date_time" type="datetime-local" id="payment_date_time" value=""/>
                                     @if ($errors->has('payment_date_time'))
                                         <span class="text-danger">{{ $errors->first('payment_date_time') }}</span>
                                     @endif
@@ -239,6 +239,25 @@
         </div>
     </div>
 
+
+    <script>
+       
+       let now = new Date();
+        let year = now.getFullYear();
+        let month = String(now.getMonth() + 1).padStart(2, '0');
+        let day = String(now.getDate()).padStart(2, '0');
+
+        let hours = String(now.getHours()).padStart(2, '0');
+        let minutes = String(now.getMinutes()).padStart(2, '0');
+
+        let formattedDate = `${year}-${month}-${day}`;
+        let formattedTime = `${hours}:${minutes}`;
+        let currentTime = `${formattedDate}T${formattedTime}`;
+
+        document.getElementById('payment_date_time').value = currentTime;
+
+    </script>
+
     <script>
         const openModal = document.querySelector('.open-modal')
         const modal = document.querySelector('.modal2');
@@ -257,19 +276,6 @@
             event.stopPropagation();
         })
     </script>
-
-
-    <script>
-        function updateDateTime() {
-            var now = new Date();
-            var isoDateTime = now.toISOString().slice(0, 16); // Định dạng ISO 8601
-            document.getElementById("payment_date_time").value = isoDateTime;
-        }
-        updateDateTime(); // Cập nhật giá trị ban đầu
-        setInterval(updateDateTime, 1000); // Cập nhật lại mỗi giây
-    </script>
-
-
 
     <script>
         var today = new Date();
