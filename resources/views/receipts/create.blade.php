@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_total_fee">Tổng học phí</label>
-                                        <input value="{{ $student->total_fee }}" name="student_total_fee" type="text"
+                                        <input style="color:grey" value="{{ $student->total_fee }}" name="student_total_fee" type="text"
                                             id="student_total_fee" readonly />
                                     </div>
 
