@@ -79,18 +79,18 @@
                                 @foreach ($students as $student)
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_id">Mã SV</label>
-                                        <input value="{{ $student->id }}" name="student_id" type="text"
+                                        <input style="color:grey" value="{{ $student->id }}" name="student_id" type="text"
                                             id="student_id" readonly />
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_name">Tên SV</label>
-                                        <input value="{{ $student->student_name }}" name="student_name" type="text"
+                                        <input style="color:grey" value="{{ $student->student_name }}" name="student_name" type="text"
                                             id="student_name" readonly />
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_dob">Ngày sinh</label>
-                                        <input value="{{ $student->student_dob }}" name="student_dob" type="date"
-                                            id="student_dob" readonly style="width:184px"/>
+                                        <input style="color:grey" value="{{ $student->student_dob }}" name="student_dob" type="date"
+                                            id="student_dob" readonly style="width:184px; color:grey" />
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_total_fee">Tổng học phí</label>
@@ -100,7 +100,7 @@
 
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="amount_each_time">HP/lần đóng</label>
-                                        <input value="{{ $student->amount_each_time }}" name="amount_each_time"
+                                        <input style="color:grey" value="{{ $student->amount_each_time }}" name="amount_each_time"
                                             type="text" id="amount_each_time" readonly />
                                     </div>
                                     <div class="mt-3 mb-3">
@@ -142,14 +142,14 @@
                                 </div>
 
                                 <div class="mt-3 mb-3">
-                                    <label class="item-label" for="submitter_name">Người nộp</label>
+                                    <label class="item-label" for="submitter_name">Người nộp <span style="color: red">*</span></label>
                                     <input name="submitter_name" type="text" id="submitter_name" />
                                     @if ($errors->has('submitter_name'))
                                         <span class="text-danger">{{ $errors->first('submitter_name') }}</span>
                                     @endif
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label class="item-label" for="submitter_phone">SĐT người nộp</label>
+                                    <label class="item-label" for="submitter_phone">SĐT người nộp <span style="color: red">*</span></label>
                                     <input name="submitter_phone" type="text" id="submitter_phone" />
                                     @if ($errors->has('submitter_phone'))
                                         <span class="text-danger">{{ $errors->first('submitter_phone') }}</span>
@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="payment_date_time">Vào lúc</label>
-                                    <input name="payment_date_time" type="datetime-local" id="payment_date_time" value="YYYY-MM-DD THH:MM:SS"/>
+                                    <input style="width: 184px" name="payment_date_time" type="datetime-local" id="payment_date_time" value="YYYY-MM-DD THH:MM:SS"/>
                                     @if ($errors->has('payment_date_time'))
                                         <span class="text-danger">{{ $errors->first('payment_date_time') }}</span>
                                     @endif
@@ -176,7 +176,7 @@
                                     <label class="item-label" for="amount_of_money">Số tiền đóng</label>
                                     <input value="{{ $student->amount_each_time }}"
                                         data-amount="{{ $student->amount_each_time }}" name="amount_of_money"
-                                        type="text" id="amount_of_money" />
+                                        type="text" id="amount_of_money" readonly/>
                                     @if ($errors->has('amount_of_money'))
                                         <span class="text-danger">{{ $errors->first('amount_of_money') }}</span>
                                     @endif
