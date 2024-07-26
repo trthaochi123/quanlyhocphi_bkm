@@ -53,7 +53,7 @@
                     <div class="mb-3">
                         <label style="font-weight:700" for="exampleFormControlTextarea1" class="form-label">Tin
                             Nhắn</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message">Nhà trường xin thông báo nhắc nhở sinh viên {{ $student->student_name }} về việc hoàn tất đóng học phí. Để đảm bảo quá trình học tập và lịch thi cử diễn ra suôn sẻ, sinh viên vui lòng hoàn tất việc đóng học phí trước ngày 20 hàng tháng. Công nợ hiện tại: {{ number_format($student->debt, 0, '', ',') }} VNĐ. Trân trọng!</textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message">Nhà trường xin thông báo nhắc nhở sinh viên {{ $student->student_name }} về việc hoàn tất đóng học phí. Để đảm bảo quá trình học tập và lịch thi cử diễn ra suôn sẻ, sinh viên vui lòng hoàn tất việc đóng học phí trước ngày 20 hàng tháng. Công nợ hiện tại: {{ number_format($student->amount_each_time, 0, '', ',') }} VNĐ. Trân trọng!</textarea>
                         @if ($errors->has('message'))
                             <span class="text-danger">{{ $errors->first('message') }}</span>
                         @endif
