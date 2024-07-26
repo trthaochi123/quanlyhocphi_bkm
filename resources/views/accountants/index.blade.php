@@ -172,7 +172,6 @@
                                     <th>Số điện thoại</th>
                                     <th>Địa chỉ</th>
                                     <th>Email</th>
-                                    <th>Mật khẩu</th>
                                     <th class="right" colspan="2">Hành động</th>
                                 </tr>
                             </thead>
@@ -185,7 +184,6 @@
                                         <td>Thành phố {{ $accountant->province }}, Quận {{ $accountant->district }},
                                             Đường {{ $accountant->street }}</td>
                                         <td>{{ $accountant->email }}</td>
-                                        <td>{{ $accountant->password }}</td>
                                         <td class="btn-edit">
                                             <div class="edit-block">
                                                 <a href="{{ route('accountants.edit', $accountant->id) }}">
@@ -252,9 +250,6 @@
                     },
                     {
                         "data": "email"
-                    },
-                    {
-                        "data": "password"
                     },
                     {
                         "defaultContent": "<button>Edit</button>" // Cột giả với nội dung mặc định
